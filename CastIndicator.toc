@@ -1,0 +1,8 @@
+## Interface: 120005
+## Title: CastIndicator
+## Notes: 匹配ActionButton1-9显示对应颜色
+## Author: lzx
+## Version: 1.0
+
+
+CastIndicator.lua
