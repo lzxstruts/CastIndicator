@@ -177,10 +177,16 @@ local function UpdateIndicator()
 
     elseif class == "DEMONHUNTER" then
 		-- 邪能之刃 232893
-		local spellCooldownInfo = C_Spell.GetSpellCooldown(232893)
-		if spellCooldownInfo and not spellCooldownInfo.isActive then
-			nextSpellID = 232893
-		end
+		local isNotOnCooldown1 = C_Spell.GetSpellCooldownDuration(232893,true):IsZero() 
+        indicator1:SetAlphaFromBoolean(isNotOnCooldown1, 1, 0)
+
+        for i = 1, 9 do
+            local spellID = GetButtonSpell(i,232893)
+            if spellID and spellID == 232893 then
+                local c = colors[i]
+                tex1:SetColorTexture(c[1] / 255, c[2] / 255, c[3] / 255, 1)
+            end
+        end
 
     elseif class == "WARLOCK" then
         -- 内爆 196277
