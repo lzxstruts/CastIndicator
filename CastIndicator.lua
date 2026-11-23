@@ -89,6 +89,18 @@ local tex = indicator:CreateTexture(nil, "BACKGROUND")
 tex:SetAllPoints(indicator)
 tex:SetColorTexture(1, 1, 1, 1)
 
+
+
+local indicator1 = CreateFrame("Frame", nil, UIParent)
+indicator1:SetSize(5, 5)
+indicator1:SetPoint("TOPLEFT", UIParent, "TOPLEFT", 10, 0)
+
+local tex1 = indicator1:CreateTexture(nil, "BACKGROUND")
+tex1:SetAllPoints(indicator1)
+tex1:SetColorTexture(1, 1, 1, 1)
+indicator1:SetAlphaFromBoolean(false, 1, 0)
+
+
 function GetButtonSpell(slotIndex,nextSpellID)
     local actionType, id = GetActionInfo(slotIndex)
     if actionType == "spell" then
@@ -158,13 +170,21 @@ local function UpdateIndicator()
 
     elseif class == "WARLOCK" then
         -- 内爆 196277
-        local spellCooldownInfo = C_Spell.GetSpellCooldown(196277)
-        --print(spellCooldownInfo.isActive , spellCooldownInfo.isOnGCD)
-        if spellCooldownInfo and not spellCooldownInfo.isActive then
-            nextSpellID = 196277
-         
+        local isNotOnCooldown = C_Spell.GetSpellCooldownDuration(196277,true):IsZero() 
+ 
+        indicator1:SetAlphaFromBoolean(isNotOnCooldown, 1, 0)
+
+
+        for i = 1, 9 do
+            local spellID = GetButtonSpell(i,196277)
+            if spellID and spellID == 196277 then
+                local c = colors[i]
+                tex1:SetColorTexture(c[1] / 255, c[2] / 255, c[3] / 255, 1)
+              
+            end
         end
-	end
+        
+    end
 
 
 
