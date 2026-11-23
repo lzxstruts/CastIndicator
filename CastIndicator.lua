@@ -101,6 +101,20 @@ tex1:SetColorTexture(1, 1, 1, 1)
 indicator1:SetAlphaFromBoolean(false, 1, 0)
 
 
+local indicator2 = CreateFrame("Frame", nil, UIParent)
+indicator2:SetSize(5, 5)
+indicator2:SetPoint("TOPLEFT", UIParent, "TOPLEFT", 10, 0)
+
+local tex2 = indicator2:CreateTexture(nil, "BACKGROUND")
+tex2:SetAllPoints(indicator2)
+tex2:SetColorTexture(1, 1, 1, 1)
+indicator2:SetAlphaFromBoolean(false, 1, 0)
+
+indicator:SetFrameLevel(1)
+indicator1:SetFrameLevel(2)
+indicator2:SetFrameLevel(3)
+
+
 function GetButtonSpell(slotIndex,nextSpellID)
     local actionType, id = GetActionInfo(slotIndex)
     if actionType == "spell" then
@@ -170,17 +184,27 @@ local function UpdateIndicator()
 
     elseif class == "WARLOCK" then
         -- 内爆 196277
-        local isNotOnCooldown = C_Spell.GetSpellCooldownDuration(196277,true):IsZero() 
- 
-        indicator1:SetAlphaFromBoolean(isNotOnCooldown, 1, 0)
-
+        local isNotOnCooldown1 = C_Spell.GetSpellCooldownDuration(196277,true):IsZero() 
+        indicator1:SetAlphaFromBoolean(isNotOnCooldown1, 1, 0)
 
         for i = 1, 9 do
             local spellID = GetButtonSpell(i,196277)
             if spellID and spellID == 196277 then
                 local c = colors[i]
                 tex1:SetColorTexture(c[1] / 255, c[2] / 255, c[3] / 255, 1)
-              
+            end
+        end
+
+
+        -- 小鬼 1276452
+        local isNotOnCooldown2 = C_Spell.GetSpellCooldownDuration(1276452,true):IsZero() 
+        indicator2:SetAlphaFromBoolean(isNotOnCooldown2, 1, 0)
+
+        for i = 1, 9 do
+            local spellID = GetButtonSpell(i,1276452)
+            if spellID and spellID == 1276452 then
+                local c = colors[i]
+                tex2:SetColorTexture(c[1] / 255, c[2] / 255, c[3] / 255, 1)
             end
         end
         
