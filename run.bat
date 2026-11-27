@@ -18,7 +18,9 @@ if not defined PY (
 )
 
 rem everything ready: no output at all, just start
-if not defined NEED goto :run
+if not defined NEED (
+    goto :run
+)
 
 rem ================== only prints when something must be installed ==================
 if not defined PY (
@@ -58,7 +60,10 @@ if not exist "%SCRIPT%" (
     exit /b 1
 )
 
+
 !PY! "%SCRIPT%"
+echo Python process exited. ErrorLevel=!errorlevel!
+pause
 exit /b
 
 rem ================== sub routines ==================
